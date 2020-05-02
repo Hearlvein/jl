@@ -45,12 +45,14 @@ int main()
 		myList.push_front(Obj(5));
 
 		for (auto it = myList.begin(); it != myList.end(); ++it)
-			std::cout << it->getVal() << std::endl;
+			std::cout << it->getVal() << " ";
+		std::cout << std::endl;
 
-		myList.pop_front();
+		myList.erase(myList.begin()+1, myList.begin()+1);
 
 		for (auto it = myList.begin(); it != myList.end(); ++it)
-			std::cout << it->getVal() << std::endl;
+			std::cout << it->getVal() << " ";
+		std::cout << std::endl;
 	}
 
 	std::cout << "number of obj: " << Obj::instances << std::endl;
