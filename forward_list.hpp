@@ -1,49 +1,36 @@
 #pragma once
 
-#include "basic_iterator.hpp"
+#include "forward_iterator.hpp"
 
 namespace jl
 {
-	template <class C>
+	template <class ElemType>
 	class forward_list
 	{
-		struct node
-		{
-			node() { node_inst++; }
-			~node()
-			{
-				if (val) delete val;
-				node_inst--;
-			}
-			C* val = nullptr;
-			node* next = nullptr;
-			static int node_inst;
-		};
+		using node = forward_node<ElemType>;
+		using iterator = forward_iterator<ElemType, node>;
+
 		node* first = nullptr;
 
-		using iterator = basic_iterator<node, C>;
-
 	public:
-		
-
 		forward_list() {}
 		~forward_list()
 		{
 			while (first) pop_front();
 		}
-		void push_front(const C& obj)
+		void push_front(const ElemType& obj)
 		{
 			if (!first)
 			{
 				first = new node;
-				first->val = new C(obj);
+				first->val = new ElemType(obj);
 				first->next = nullptr;
 			}
 			else
 			{
 				node* temp = first;
 				first = new node;
-				first->val = new C(obj);
+				first->val = new ElemType(obj);
 				first->next = temp;
 			}
 		}
@@ -60,5 +47,4 @@ namespace jl
 		iterator end() const { return iterator(nullptr); }
 		static int getNodeInst() { return node::node_inst; }
 	};
-	template <class C> int forward_list<C>::node::node_inst = 0;
 }
